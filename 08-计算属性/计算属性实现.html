@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name=viewport
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <title>计算属性实现姓名案例</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div class="root">
+    姓:<input type="text" v-model="firstname">
+    <br>
+    名:<input type="text" v-model="lastname">
+    <br>
+    <!--不建议插值表达式太过于复杂,Vue中有多种方法可以使表达式中的语句变得简洁-->
+    <!--methods方法调用后进行插值-->
+    全名:<span>{{ fullName }}</span>  <br>
+    全名:<span>{{ fullName }}</span>  <br>
+    全名:<span>{{ fullName }}</span>  <br>
+    全名:<span>{{ fullName }}</span>  <br>
+    全名:<span>{{ fullName }}</span>  <br>
+    全名:<span>{{ fullName }}</span>  <br>
+    全名:<span>{{ fullName }}</span>
+</div>
+
+<!--
+  08-计算属性：
+      1.定义：要用的属性不存在，要通过已有属性计算得来。
+      2.原理：底层借助了Objcet.defineproperty方法提供的getter和setter。
+      3.get函数什么时候执行？
+            (1).初次读取时会执行一次。
+            (2).当依赖的数据发生改变时会被再次调用。
+      4.优势：与methods实现相比，内部有缓存机制（复用），效率更高，调试方便。
+      5.备注：
+          1.计算属性最终会出现在vm上，直接读取使用即可。
+          2.如果计算属性要被修改，那必须写set函数去响应修改，且set中要引起计算时依赖的数据发生改变。
+ -->
+<script>
+    const vm=new Vue({
+        el:'.root',
+        data:{
+            firstname: '张',
+            lastname:'三'
+        },
+        methods:{
+            //methods中的fullName也被写到了Vue实例中,作为其一个属性,因此插值语法表达式可以直接调用
+            // fullName(){
+            //     //模板表达式
+            //     return `${this.firstname.slice(0,3)}-${this.lastname}`
+            // }
+        },
+        computed:{
+            fullName:{
+                //get有什么作用?当有人读取fullName时,get就会被调用,且返回值就走为fullName的属性
+                //get什么时候调用?:
+                // 1.初次读取fullName时会被调用(之后再读取会有缓存,直接从缓存中读取数据,而methods中的方法则会被重复调用)
+                //2.所依赖的数据发生变化时
+                get(){
+                    console.log('@@@@@@@')
+                    return this.firstname+'-'+this.lastname
+                },
+                //setter什么时候被调用?
+                //只有当fullName被修改的时候才会调用set
+                set(value){
+                    const arr=value.split('-');
+                    this.firstname=arr[0];
+                    this.lastname=arr[1];
+                }
+
+
+            }
+        }
+    })
+    console.log(vm)
+</script>
+</body>
+</html>

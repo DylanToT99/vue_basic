@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name=viewport
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <title>methods实现姓名案例</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div class="root">
+    姓:<input type="text" v-model="firstname">
+    <br>
+    名:<input type="text" v-model="lastname">
+    <br>
+    <!--不建议插值表达式太过于复杂,Vue中有多种方法可以使表达式中的语句变得简洁-->
+    <!--methods方法调用后进行插值-->
+    全名:<span>{{ fullName() }}</span>
+</div>
+<script>
+    const vm=new Vue({
+        el:'.root',
+        data:{
+            firstname: '张',
+            lastname:'三'
+        },
+        methods:{
+            //methods中的fullName也被写到了Vue实例中,作为其一个属性,因此插值语法表达式可以直接调用
+            fullName(){
+                //模板表达式
+                return `${this.firstname.slice(0,3)}-${this.lastname}`
+            }
+        }
+    })
+    console.log(vm)
+</script>
+</body>
+</html>

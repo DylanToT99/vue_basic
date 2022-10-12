@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name=viewport
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <title>模拟数据监测</title>
+</head>
+<body>
+<script>
+    let data={
+        a:1,
+        name:"dylan"
+    }
+    let vm={}
+
+    //创建实例对象, 用于监视data中的属性变化
+    const obs=new Observer(data)
+    vm._data=data=obs;
+    function Observer(obj){
+        const keys=Object.keys(obj);
+        // console.log(keys)
+        keys.forEach((k)=>{
+            Object.defineProperty(this,k,{
+                get(){
+                    return obj[k]
+                },
+                set(val){
+                    console.log(`${k}被改了`)
+                    obj[k]=val;
+                }
+            })
+        })
+    }
+    console.log(vm)
+
+</script>
+</body>
+</html>

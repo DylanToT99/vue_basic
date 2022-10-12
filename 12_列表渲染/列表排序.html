@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name=viewport
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <title>列表排序</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>请输入名字:</h2><input type="text" placeholder="请输入名字" v-model="keyword">
+        <button @click="sortType=1">年龄升序</button>
+        <button @click="sortType=2">年龄降序</button>
+        <button @click="sortType=0">原顺序</button>
+        <ul>
+            <li v-for='(person, index) in filterPersons' :key="index">
+                <!--p可能来自形参，也可能来自于写在data里的属性，更可能来自于计算属性 computed-->
+                {{person.name}} - {{ person.age }}--{{person.sex}}
+            </li>
+        </ul>
+
+    </div>
+
+<script type="text/javascript">
+    Vue.config.productionTip = false;
+
+    new Vue({
+        el: '#root',
+        data: {
+            sortType:0,//0 原顺序   1升序   2降序
+            keyword: '',
+            //数组
+            persons: [
+                {id: '001', name: '周杰伦', age: 18, sex: '女'},
+                {id: '002', name: '周冬雨', age: 19, sex: '男'},
+                {id: '003', name: '温兆伦', age: 20, sex: '女'},
+                {id: '004', name: '温杰雨', age: 2, sex: '男'}
+            ],
+        },
+        computed:{
+            filterPersons(){
+                const arr= this.persons.filter((p)=>{
+                   return p.name.indexOf(this.keyword)!==-1;
+                })
+                //判断是否要排序
+                if(!this.sortType){
+                    return arr;
+                }
+                return arr.sort((p1,p2)=>this.sortType===2?p1.age-p2.age:p2.age-p1.age)
+            }
+        }
+    })
+</script>
+</body>
+</html>

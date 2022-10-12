@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+    MVVM模型:
+    M:模型(model): data中的数据
+    V:视图(View):模板代码
+    VM:视图模型(ModelView):Vue实例
+
+    实际上,data中所有的属性都出现在了vm身上
+    vm身上的所有属性以及Vue原型上的所有属性,在Vue模板中都可以用到
+ -->
+    <div class="root">
+        <h1>学校名称:{{name}}</h1>
+        <h1>学校地址:{{address}}</h1>
+        <h1>测试1:{{_data}}</h1>
+    </div>
+    <script>
+        Vue.config.productionTip = false;
+        const vm = new Vue({
+            el: '.root', //el用于指定当前Vue实例为哪个容器服务, 值通常为css选择器字符串
+            data: { //data中用于存储数据,数据供el所指定的容器使用
+                name: 'Dylan',
+                address: 'pan',
+                school: {
+                    name: '好'
+                }
+            }
+        })
+        console.log(vm)
+    </script>
+</body>
+
+</html>

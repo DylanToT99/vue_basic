@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name=viewport
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <title>更新时的问题</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <button @click="updateJay">更新周杰伦的信息</button>
+        <ul>
+            <li v-for='(person, index) in persons' :key="index">
+                <!--p可能来自形参，也可能来自于写在data里的属性，更可能来自于计算属性 computed-->
+                {{person.name}} - {{ person.age }}--{{person.sex}}
+            </li>
+        </ul>
+    </div>
+
+<script type="text/javascript">
+    Vue.config.productionTip = false;
+
+    const vm=new Vue({
+        el: '#root',
+        data: {
+            //数组
+            persons: [
+                {id: '001', name: '周杰伦', age: 18, sex: '女'},
+                {id: '002', name: '周冬雨', age: 19, sex: '男'},
+                {id: '003', name: '温兆伦', age: 20, sex: '女'},
+                {id: '004', name: '温杰雨', age: 2, sex: '男'}
+               ],
+        },
+        methods: {
+            updateJay() {
+                //奏效
+                // this.persons[0].name='Jay';
+                // this.persons[0].sex='男'
+                // this.persons[0] = {
+                //     age: 18,
+                //     id: "001",
+                //     name: "Jay",
+                //     sex: "男",
+                // }//此行代码实际改变了persons[0]的值但是Vue没有检测到
+                this.persons.splice(0,1,{
+                    age: 18,
+                    id: "001",
+                    name: "Jay",
+                    sex: "男",
+                })//奏效
+                console.log(this.persons[0])
+            }
+        }
+    })
+</script>
+</body>
+</html>

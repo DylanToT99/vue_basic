@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name=viewport
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <title>Title</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div class="root">
+        姓:<input type="text" v-model="firstname">
+        <br>
+        名:<input type="text" v-model="lastname">
+        <br>
+        <!--不建议插值表达式太过于复杂,Vue中有多种方法可以使表达式中的语句变得简洁-->
+        全名:<span>{{firstname.slice(0,3)}}-{{lastname}}</span>
+    </div>
+
+
+<script>
+    const vm=new Vue({
+        el:'.root',
+        data:{
+            firstname:'张',
+            lastname:'三'
+        },
+        methods:{
+
+        }
+    })
+</script>
+</body>
+</html>
